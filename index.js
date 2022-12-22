@@ -144,6 +144,12 @@ async function run() {
             const users = await usersCollection.find(query).toArray();
             res.send(users)
         })
+        app.post('/users', async (req, res) => {
+            const user = req.body;
+            console.log(user);
+            const result = await usersCollection.insertOne(user);
+            res.send(result);
+        });
         app.put('/users/admin/:id', verifyJwt, verifyAdmin, async (req, res) => {
             const id = req.params.id;
             const filter = { _id: ObjectId(id) }
